@@ -60,26 +60,8 @@ This is a Java-based backend application built using **Spring Boot**. It provide
 * Spring Boot
 * Spring Data JPA
 * Hibernate
-* Maven / Gradle
-* MySQL / PostgreSQL (or any DB)
-
----
-
-## 📂 Project Structure
-
-```
-src/
- ├── main/
- │   ├── java/com/example/demo/
- │   │   ├── controller/
- │   │   ├── service/
- │   │   ├── repository/
- │   │   └── model/
- │   └── resources/
- │       ├── application.properties
- │       └── data.sql
- └── test/
-```
+* Maven
+* H2
 
 ---
 
@@ -88,21 +70,20 @@ src/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/Niharikabandaru-coder/JavaReactApplication.git
 cd your-repo
 ```
 
 ### 2. Configure Database
 
-Update `application.properties`:
+Update `application.yaml`:
 
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/your_db
-spring.datasource.username=root
-spring.datasource.password=your_password
-
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+ datasource:
+    url: jdbc:h2:mem:taskdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
 ```
 
 ---
@@ -133,11 +114,11 @@ Application.java
 
 | Method | Endpoint        | Description     |
 | ------ | --------------- | --------------- |
-| GET    | /api/users      | Get all users   |
-| GET    | /api/users/{id} | Get user by ID  |
-| POST   | /api/users      | Create new user |
-| PUT    | /api/users/{id} | Update user     |
-| DELETE | /api/users/{id} | Delete user     |
+| GET    | /api/tasks      | Get all tasks   |
+| GET    | /api/tasks/{id} | Get task by ID  |
+| POST   | /api/tasks      | Create new task |
+| PUT    | /api/tasks/{id} | Update task     |
+| DELETE | /api/tasks/{id} | Delete task     |
 
 ---
 
@@ -145,56 +126,25 @@ Application.java
 
 ### Create User
 
-```json
-POST /api/users
-{
-  "name": "John Doe"
-}
-```
-
+ 
+curl -v http://localhost:8080/api/tasks
+ 
 ---
 
 ## 📤 Example Response
 
 ```json
-{
-  "id": 1,
-  "name": "John Doe"
-}
-```
-
----
-
-## 🧪 Running Tests
-
-```bash
-mvn test
-```
-
----
-
-## 📦 Build JAR
-
-```bash
-mvn package
-```
-
-Run:
-
-```bash
-java -jar target/app.jar
-```
-
----
-
-## 🔐 Environment Variables (Optional)
-
-You can externalize configs:
-
-```
-SPRING_DATASOURCE_URL=
-SPRING_DATASOURCE_USERNAME=
-SPRING_DATASOURCE_PASSWORD=
+[
+  {
+    "id": 1,
+    "title": "Complete Project Setup",
+    "description": "Set up Spring Boot project with H2 database and Flyway",
+    "status": "DONE",
+    "dueDate": "2026-03-10",
+    "createdAt": "2026-03-24T14:58:19.609093",
+    "updatedAt": "2026-03-24T14:58:19.609093"
+  }
+]
 ```
 
 ---
@@ -211,11 +161,7 @@ SPRING_DATASOURCE_PASSWORD=
 
 ## 👨‍💻 Author
 
-Your Name
-GitHub: https://github.com/your-username
+NiharikaBandaru 
+GitHub: https://github.com/Niharikabandaru-coder/JavaReactApplication
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License.
