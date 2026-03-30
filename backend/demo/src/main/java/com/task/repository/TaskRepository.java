@@ -6,7 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.task.model.Task;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task, Long>{
-     // Find tasks by id
-    Task findById(int id);
+public interface TaskRepository extends JpaRepository<Task, Long> {
 } 

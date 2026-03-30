@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.task.repository.TaskRepository;
 import com.task.dto.TaskDTO;
+import com.task.exception.TaskNotFoundException;
 import com.task.model.Task;
 import com.task.model.TaskStatus;
 
@@ -24,8 +25,10 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<TaskDTO> getTaskById(Long id) {
-        return taskRepository.findById(id).map(this::convertToDTO);
+    public TaskDTO getTaskById(Long id) {
+        return taskRepository.findById(id)
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
        // Convert Task entity to TaskDTO
     private TaskDTO convertToDTO(Task task) {

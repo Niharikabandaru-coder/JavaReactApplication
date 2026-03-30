@@ -1,67 +1,43 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Task Management System
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-
-# 🚀 Spring Boot Application
-
-## 📌 Overview
-
-This is a Java-based backend application built using **Spring Boot**. It provides RESTful APIs for managing resources and demonstrates best practices for building scalable applications.
+A full-stack task management application that supports full CRUD operations — create, read, update, and delete tasks — with a React TypeScript frontend and a Spring Boot backend.
 
 ---
 
-## 🛠️ Tech Stack
+## Table of Contents
 
-* Java 17+
-* Spring Boot
-* Spring Data JPA
-* Hibernate
-* Maven
-* H2
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [TaskTable Component](#tasktable-component)
+- [API Endpoints](#api-endpoints)
+- [Project Structure](#project-structure)
+- [AI Tools Usage](#ai-tools-usage)
+- [Critical Reflection on AI Usage](#critical-reflection-on-ai-usage)
+
+---
+
+## Features
+
+- View all tasks loaded automatically on page mount
+- Add a new task using the always-visible form
+- Edit any task — form pre-fills with existing data
+- Delete any task with a confirmation prompt
+- Change task status inline directly from the table
+- Input validation with character limits and required field checks
+- User-friendly dismissible error banners for API failures
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | React, TypeScript |
+| Backend | Spring Boot (Java) |
+| API | REST over HTTP |
+| Styling | Inline CSS (no external library) |
 
 ---
 
@@ -73,6 +49,7 @@ This is a Java-based backend application built using **Spring Boot**. It provide
 git clone https://github.com/Niharikabandaru-coder/JavaReactApplication.git
 cd your-repo
 ```
+### Backend
 
 ### 2. Configure Database
 
@@ -84,8 +61,12 @@ Update `application.yaml`:
     driver-class-name: org.h2.Driver
     username: sa
     password: password
+ h2:
+    console:
+      enabled: true
+      path: /h2-console
 ```
-
+h2-console access : http://localhost:8080/h2-console
 ---
 
 ### 3. Build the project
@@ -96,7 +77,7 @@ mvn clean install
 
 ---
 
-### 4. Run the application
+### 4. Run the Backend
 
 ```bash
 mvn spring-boot:run
@@ -105,7 +86,7 @@ mvn spring-boot:run
 Or run the main class:
 
 ```
-Application.java
+TaskmanagementApplication.java
 ```
 
 ---
@@ -148,16 +129,106 @@ curl -v http://localhost:8080/api/tasks
 ```
 
 ---
-
-## 🧩 Features
-
-* RESTful APIs
-* Layered architecture (Controller, Service, Repository)
-* Database integration
-* Exception handling
-* Validation support
+## Key Points
+* Added Swagger documentation (http://localhost:8080/swagger-ui.html) an interactive UI for testing api
 
 ---
+### Frontend
+
+## Prerequisites
+
+- Backend API running at `http://localhost:8080`
+- React with TypeScript
+
+## API Endpoints Expected
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/tasks` | Fetch all tasks |
+| POST | `/api/tasks` | Create a new task |
+| PUT | `/api/tasks/:id` | Update a task |
+| DELETE | `/api/tasks/:id` | Delete a task |
+
+## Available Scripts
+
+In the project directory frontend/react-app , you can run:
+
+### `npm install` or `npm ci`
+
+Installs the dependencies.
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+---
+
+## TaskTable Component
+
+A React component for managing tasks with full CRUD operations.
+
+### Usage
+
+Import and drop the component into any page:
+```tsx
+import TaskTable from "./components/TaskTable";
+
+function App() {
+  return <TaskTable />;
+}
+```
+
+### Features
+
+- **View tasks** — table loads automatically on mount
+- **Add a task** — fill in the form at the top and click *Add Task*
+- **Edit a task** — click *Edit* on any row; the form pre-fills with existing data
+- **Delete a task** — click *Delete* on any row and confirm the prompt
+- **Change status inline** — use the coloured dropdown in the Status column directly from the table
+- **Validation** — title is required (max 100 chars), description is optional (max 500 chars)
+- **Error handling** — API errors appear in a dismissible banner at the top
+
+### Task Status Values
+
+| Value         | Label |
+|------------   |-------|
+| `TODO`        | To Do |
+| `IN_PROGRESS` | In Progress |
+| `DONE`        | Completed |
+
+### Validation Rules
+
+| Field | Rule |
+|-------|------|
+| Title | Required, max 100 characters |
+| Description | Optional, max 500 characters |
+| Status | Must be one of: `TODO`, `IN_PROGRESS`, `DONE` |
+
+### Task Status Values
+
+| Value | Display Label | Colour |
+|-------|--------------|--------|
+| `TODO` | To Do | Blue |
+| `IN_PROGRESS` | In Progress | Orange |
+| `DONE` | Completed | Green |
+
+---
+
+## AI Tools Usage
+
+This project used **Roo Code** and **GitHub Copilot** as AI assistants during development. Below is a transparent account of where and how each was used.
+
+### Usage 
+ * Generated React components and hooks
+ * Assisted with state management and API integration
+ * Helped debug errors and improve code structure
+ * Helped design REST API structure
+---
+
 
 ## 👨‍💻 Author
 

@@ -1,8 +1,6 @@
 package com.task.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +13,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.concurrent.atomic.AtomicLong;
 
 import com.task.dto.TaskDTO;
-import com.task.model.Task;
 import com.task.services.TaskService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -40,8 +38,9 @@ public class TaskController {
     }
     // GET TASK BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<TaskDTO>> getTaskById(@PathVariable long id) {
-        return ResponseEntity.ok(taskService.getTaskById(id));
+    public ResponseEntity<TaskDTO> getTaskById(@PathVariable Long id) {
+        TaskDTO task = taskService.getTaskById(id);
+        return ResponseEntity.ok(task);
     }
 
     /**
@@ -49,8 +48,8 @@ public class TaskController {
      * POST /api/tasks
      */
    
-      @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO request) {
+    @PostMapping
+    public ResponseEntity<TaskDTO> createTask(@Valid @RequestBody TaskDTO request) {
         if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
@@ -66,7 +65,7 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(
             @PathVariable Long id,
-            @RequestBody TaskDTO request) {
+            @Valid @RequestBody TaskDTO request) {
         if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }

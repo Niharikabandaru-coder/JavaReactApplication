@@ -5,9 +5,18 @@ import java.time.LocalDateTime;
 
 import com.task.model.TaskStatus;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class TaskDTO {
+
     private Long id;
+
+    @NotBlank(message = "Title is required")
+    @Size(max = 100, message = "Title must be at most 100 characters")
     private String title;
+
+    @Size(max = 500)
     private String description;
     private TaskStatus status;
     private LocalDate dueDate;
