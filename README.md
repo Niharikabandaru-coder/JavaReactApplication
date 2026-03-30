@@ -192,14 +192,6 @@ function App() {
 - **Validation** — title is required (max 100 chars), description is optional (max 500 chars)
 - **Error handling** — API errors appear in a dismissible banner at the top
 
-### Task Status Values
-
-| Value         | Label |
-|------------   |-------|
-| `TODO`        | To Do |
-| `IN_PROGRESS` | In Progress |
-| `DONE`        | Completed |
-
 ### Validation Rules
 
 | Field | Rule |
