@@ -66,7 +66,7 @@ Update `application.yaml`:
       enabled: true
       path: /h2-console
 ```
-h2-console access : http://localhost:8080/h2-console
+### h2-console access : http://localhost:8080/h2-console
 ---
 
 ### 3. Build the project
@@ -220,7 +220,7 @@ function App() {
 
 ## AI Tools Usage
 
-This project used **Roo Code** and **GitHub Copilot** as AI assistants during development. Below is a transparent account of where and how each was used.
+This project used **Roo Code** and **GitHub Copilot** as AI assistants during development.
 
 ### Usage 
  * Generated React components and hooks
